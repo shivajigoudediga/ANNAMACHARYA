@@ -1,0 +1,25 @@
+import streamlit as st
+import pandas as pd
+import time
+from datetime import datetime
+
+
+ts=time.time()
+date= datetime.fromtimestamp(ts).strftime("%d-%m-%y")
+timestmap=datetime.fromtimestamp(ts).strftime("%H-%M-%S")
+from streamlit_autorefresh import st_autorefresh
+count=st_autorefresh(interval=2000,limit=100,key="fizzbuzzcounter")
+
+if count==0:
+    st.write("count is zero")
+elif count %3==0 and count %5==0:
+    st.write("fizzbuzz")
+elif count % 5==0:
+    st.write("buzz")
+else:
+    st.write("count is:{count}")
+
+
+
+df=pd.read_csv("Attendance/Attendance"+date+".csv")
+st.dataframe(df.style.highlight_max(axis=0))
